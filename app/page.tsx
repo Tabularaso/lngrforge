@@ -1,118 +1,93 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#090909] text-white">
-      <section className="relative flex min-h-screen items-center overflow-hidden px-6 py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,106,0,0.16),transparent_35%)]" />
+    <main className="min-h-screen bg-[#090909] text-white flex items-center justify-center px-6">
+      {/* Hintergrund */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,115,0,0.15),transparent_45%)]" />
 
-        <div className="relative mx-auto w-full max-w-6xl">
-          <p className="mb-6 text-sm uppercase tracking-[0.35em] text-orange-500">
-            Engineering · Prototyping · Additive Manufacturing
-          </p>
-
-          <h1 className="max-w-4xl text-6xl font-black tracking-tight sm:text-7xl md:text-8xl">
-            LNGR
-            <span className="block text-orange-500">FORGE</span>
-          </h1>
-
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-400 sm:text-xl">
-            Von der Idee zum fertigen Bauteil. Technische Lösungen,
-            Prototypen und Kleinserien mit Fokus auf Funktion,
-            Präzision und saubere Umsetzung.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="#kontakt"
-              className="rounded-md bg-orange-500 px-6 py-3 font-semibold text-black transition hover:bg-orange-400"
-            >
-              Projekt anfragen
-            </a>
-
-            <a
-              href="#leistungen"
-              className="rounded-md border border-zinc-700 px-6 py-3 font-semibold text-white transition hover:border-orange-500"
-            >
-              Leistungen ansehen
-            </a>
-          </div>
+      {/* Under Construction Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 border-b border-orange-500/30 bg-black/80 backdrop-blur">
+        <div className="mx-auto max-w-7xl px-6 py-3 text-center text-sm">
+          <span className="font-bold text-orange-500">
+            🚧 UNDER CONSTRUCTION
+          </span>
+          <span className="text-zinc-300">
+            {" "}
+            – LNGR Forge befindet sich aktuell im Aufbau. Es können derzeit
+            keine Aufträge angenommen werden.
+          </span>
         </div>
-      </section>
+      </div>
 
-      <section id="leistungen" className="border-t border-zinc-900 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-orange-500">
-            Leistungen
-          </p>
+      {/* Hero */}
+      <section className="relative z-10 max-w-5xl w-full">
 
-          <h2 className="mt-4 text-4xl font-bold sm:text-5xl">
-            Engineering statt nur Drucken.
-          </h2>
+        <p className="mb-6 tracking-[0.35em] uppercase text-orange-500 text-sm">
+          ENGINEERING • PROTOTYPING • ADDITIVE MANUFACTURING
+        </p>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              "3D-Druck",
-              "Prototyping",
-              "CAD & Konstruktion",
-              "Kleinserien",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-xl border border-zinc-800 bg-zinc-950 p-6"
-              >
-                <div className="mb-6 h-px w-12 bg-orange-500" />
-                <h3 className="text-xl font-semibold">{item}</h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        <h1 className="text-7xl font-black leading-none">
+          <span className="block text-white">LNGR</span>
+          <span className="block text-orange-500">FORGE</span>
+        </h1>
 
-      <section className="border-t border-zinc-900 px-6 py-24">
-        <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
-          <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-orange-500">
-              LNGR Forge
-            </p>
+        <p className="mt-10 max-w-2xl text-xl leading-9 text-zinc-400">
+          Von der Idee zum fertigen Produkt.
+          <br />
+          Engineering, Softwareentwicklung, KI-Lösungen,
+          Prototypen und Additive Fertigung –
+          alles unter einem Dach.
+        </p>
 
-            <h2 className="mt-4 text-4xl font-bold">
-              Technische Lösungen mit Anspruch.
-            </h2>
-          </div>
+        <div className="mt-10 flex flex-wrap gap-4">
 
-          <div className="space-y-6 text-lg leading-8 text-zinc-400">
-            <p>
-              Keine Massenware. Keine Standardlösung um jeden Preis.
-              LNGR Forge steht für individuelle technische Lösungen,
-              funktionale Konstruktionen und hochwertige Fertigung.
-            </p>
-
-            <p>
-              Von Einzelteilen über Prototypen bis zur Kleinserie.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="kontakt"
-        className="border-t border-zinc-900 bg-orange-500 px-6 py-24 text-black"
-      >
-        <div className="mx-auto max-w-6xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em]">
-            Projekt starten
-          </p>
-
-          <h2 className="mt-4 max-w-3xl text-4xl font-black sm:text-6xl">
-            Du hast eine Idee. Wir machen daraus ein Bauteil.
-          </h2>
-
-          <a
-            href="mailto:info@lngr-forge.de"
-            className="mt-10 inline-block rounded-md bg-black px-6 py-3 font-semibold text-white"
+          <button
+            disabled
+            className="cursor-not-allowed rounded-lg bg-zinc-800 px-8 py-4 font-semibold text-zinc-500"
           >
-            info@lngr-forge.de
-          </a>
+            Projektanfragen bald verfügbar
+          </button>
+
+          <button
+            disabled
+            className="cursor-not-allowed rounded-lg border border-zinc-700 px-8 py-4 font-semibold text-zinc-500"
+          >
+            Website im Aufbau
+          </button>
+
         </div>
+
+        <div className="mt-16 rounded-xl border border-orange-500/20 bg-zinc-900/60 p-6 backdrop-blur">
+          <h2 className="text-xl font-bold text-orange-500">
+            Aktueller Status
+          </h2>
+
+          <p className="mt-3 text-zinc-400 leading-8">
+            Die Infrastruktur von LNGR Forge ist erfolgreich online.
+            In den kommenden Wochen entstehen hier Portfolio,
+            Dienstleistungen, Referenzprojekte und weitere Inhalte.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+
+            <span className="rounded-full bg-green-600/20 px-4 py-2 text-sm text-green-400">
+              ✓ Domain online
+            </span>
+
+            <span className="rounded-full bg-green-600/20 px-4 py-2 text-sm text-green-400">
+              ✓ Vercel Deployment
+            </span>
+
+            <span className="rounded-full bg-green-600/20 px-4 py-2 text-sm text-green-400">
+              ✓ GitHub Repository
+            </span>
+
+            <span className="rounded-full bg-orange-600/20 px-4 py-2 text-sm text-orange-400">
+              🚧 Inhalte im Aufbau
+            </span>
+
+          </div>
+        </div>
+
       </section>
     </main>
   );
