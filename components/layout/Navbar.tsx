@@ -1,113 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+
+import { useEffect, useRef, useState } from "react";
+import Brand from "@/components/ui/Brand";
+import Arrow from "@/components/ui/Arrow";
+import { navigation } from "@/lib/site";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const header = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const breakpoint = window.matchMedia("(min-width: 960px)");
+    const onResize = () => { if (breakpoint.matches) setOpen(false); };
+    breakpoint.addEventListener("change", onResize);
+    return () => breakpoint.removeEventListener("change", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    const onOutside = (event: PointerEvent) => {
+      if (!header.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onOutside);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onOutside);
+    };
+  }, [open]);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-
-        {/* Brand */}
-        <a href="#" className="flex items-center gap-2">
-          <span className="text-xl font-black tracking-tight text-white">
-            LNGR
-          </span>
-
-          <span className="text-xl font-black tracking-tight text-orange-500">
-            FORGE
-          </span>
-        </a>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
-          <a
-            href="#services"
-            className="text-sm font-medium text-zinc-400 transition hover:text-orange-500"
-          >
-            Leistungen
-          </a>
-
-          <a
-            href="#projects"
-            className="text-sm font-medium text-zinc-400 transition hover:text-orange-500"
-          >
-            Projekte
-          </a>
-
-          <a
-            href="#about"
-            className="text-sm font-medium text-zinc-400 transition hover:text-orange-500"
-          >
-            Über uns
-          </a>
-
-          <a
-            href="#contact"
-            className="text-sm font-medium text-zinc-400 transition hover:text-orange-500"
-          >
-            Kontakt
-          </a>
+    <header ref={header} className="site-header">
+      <div className="container header-inner">
+        <Link href="/#top" aria-label="LNGR-Forge – Startseite" className="brand-link" onClick={() => setOpen(false)}><Brand /></Link>
+        <nav aria-label="Hauptnavigation" className="desktop-nav">
+          {navigation.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
         </nav>
-
-        {/* CTA */}
-        <div className="hidden md:block">
-          <span className="rounded-lg border border-orange-500/30 bg-orange-500/10 px-5 py-3 text-sm font-semibold text-orange-400">
-            Projektanfragen bald verfügbar
-          </span>
-        </div>
-
-        {/* Mobile Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Menü öffnen"
-          className="flex flex-col gap-1.5 md:hidden"
-        >
-          <span className="h-0.5 w-6 bg-white" />
-          <span className="h-0.5 w-6 bg-white" />
-          <span className="h-0.5 w-6 bg-white" />
+        <Link className="header-contact" href="/#contact">Kontakt <Arrow diagonal /></Link>
+        <button ref={toggle} type="button" className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Menü schließen" : "Menü öffnen"} onClick={() => setOpen(!open)}>
+          <span>{open ? "Schließen" : "Menü"}</span>
+          <span className={`menu-symbol${open ? " is-open" : ""}`} aria-hidden="true"><i /><i /></span>
         </button>
       </div>
-
-      {/* Mobile Navigation */}
-      {menuOpen && (
-        <div className="border-t border-white/10 bg-black/95 px-6 py-6 md:hidden">
-          <nav className="flex flex-col gap-5">
-            <a
-              href="#services"
-              className="text-zinc-300 transition hover:text-orange-500"
-            >
-              Leistungen
-            </a>
-
-            <a
-              href="#projects"
-              className="text-zinc-300 transition hover:text-orange-500"
-            >
-              Projekte
-            </a>
-
-            <a
-              href="#about"
-              className="text-zinc-300 transition hover:text-orange-500"
-            >
-              Über uns
-            </a>
-
-            <a
-              href="#contact"
-              className="text-zinc-300 transition hover:text-orange-500"
-            >
-              Kontakt
-            </a>
-
-            <span className="mt-2 rounded-lg border border-orange-500/30 bg-orange-500/10 px-5 py-3 text-sm font-semibold text-orange-400">
-              Projektanfragen bald verfügbar
-            </span>
-          </nav>
+      <nav id="mobile-navigation" aria-label="Mobile Navigation" className="mobile-nav" hidden={!open}>
+        <div className="container">
+          {[...navigation, { href: "/#contact", label: "Kontakt" }].map((link, index) => (
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)}><span className="mono">0{index + 1}</span>{link.label}<Arrow diagonal /></Link>
+          ))}
         </div>
-      )}
+      </nav>
     </header>
   );
 }
